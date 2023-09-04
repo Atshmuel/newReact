@@ -1,0 +1,92 @@
+.persons {
+  position: relative;
+}
+
+.new--element {
+  position: fixed;
+  right: 2%;
+}
+.new--person,
+.new--element {
+  background-color: white;
+  border: none;
+}
+
+.new--element:hover {
+  width: 1.8rem;
+  cursor: pointer;
+}
+
+.loading {
+  margin-top: 10rem;
+  display: flex;
+  justify-content: center;
+  transition: 1s ease-out;
+}
+
+@keyframes roll {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading--animation {
+  animation: roll 3s linear infinite;
+}
+
+.person--details {
+  z-index: 2;
+  background-color: #fff;
+  position: relative;
+  border: 1px solid rgb(0, 0, 0, 0.1);
+  box-shadow: 1px 3px 5px cadetblue;
+  margin: 1rem;
+  padding: 2rem;
+  border-radius: 8px;
+}
+.person--details p {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  align-items: center;
+}
+
+.person--modal {
+  background-color: rgb(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.person--details .icon {
+  position: absolute;
+  top: 5%;
+  right: 1%;
+}
+
+.no--persons {
+  display: flex;
+}
+
+.no--persons p {
+  margin: 0 1rem;
+}
+.error--icon {
+  width: 3rem;
+}
+
+.error--icon:hover {
+  transform: none;
+}
+
+.groups--name {
+  margin: 0 0 0 0.2rem;
+}

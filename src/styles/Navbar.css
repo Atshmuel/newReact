@@ -1,0 +1,79 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+
+h1,
+h2 {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+h1 {
+  font-size: 1.7rem;
+}
+h2 {
+  font-size: 1.5rem;
+}
+
+ul {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+ul li {
+  list-style: none;
+  font-size: 1.1rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+ul li:hover {
+  text-decoration: underline rgba(129, 167, 255, 0.6);
+}
+
+ul a {
+  color: rgb(129, 166, 255);
+  text-decoration: none;
+  font-weight: 700;
+  padding: 0.3rem 1rem;
+}
+
+.active {
+  color: #fff;
+  transition: 0.3s ease-in;
+  transform: translateY(-10%);
+  background-color: rgb(129, 166, 255);
+  border-radius: 7px;
+}
+.active:hover {
+  text-decoration: none;
+}
+
+.breadcrumbs {
+  max-width: 1200px;
+  margin: 20px auto;
+  text-decoration: none;
+}
+.breadcrumbs > * {
+  display: inline-block;
+  margin-right: 10px;
+}
+.crumb--link {
+  text-decoration: none;
+  color: cadetblue;
+}
+.breadcrumbs .crumb:after {
+  content: ">";
+  margin-left: 10px;
+}
+.breadcrumbs .crumb:last-child:after {
+  display: none;
+}
+.breadcrumbs .crumb a {
+  color: cadetblue;
+}
