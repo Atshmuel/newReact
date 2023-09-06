@@ -16,6 +16,11 @@ import RootLayout from "./layouts/RootLayout";
 import PersonDetails, {
   personDetailLoader,
 } from "./pages/persons/PersonDetails";
+import {
+  createAction,
+  CreatePersonForm,
+} from "../src/pages/persons/CreatePersonForm";
+import SuccessModal from "./components/Success";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
@@ -26,6 +31,12 @@ const router = createBrowserRouter(
         element={<PersonLayout />}
         errorElement={<Error />}
       >
+        <Route
+          path={"create"}
+          element={<CreatePersonForm />}
+          action={createAction}
+        />
+
         <Route
           path={"PersonInfo"}
           element={<PersonInfo />}
@@ -40,6 +51,7 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path={"/Groups"} element={"/"} />
+      <Route path={"/success"} element={<SuccessModal />} />
       <Route path={"*"} element={<NotFound />} />
     </Route>
   )

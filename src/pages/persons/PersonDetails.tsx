@@ -27,7 +27,6 @@ export default function PersonDetails() {
           </span>
           's informaion page
         </h2>
-        <p className="person--name">Name: {person.name}.</p>
         <p className="person--id">ID: {person._id}.</p>
         <p className="person--age">Age: {person.age}.</p>
         <p className="person--groups">
@@ -49,7 +48,7 @@ export default function PersonDetails() {
                 .charAt(0)
                 .toLocaleUpperCase()
                 .concat(person.name.slice(1))}{" "}
-              is no part of any group
+              is no part of any group.
             </>
           )}
         </p>

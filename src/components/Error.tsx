@@ -1,7 +1,7 @@
 import { Link, useRouteError } from "react-router-dom";
 import { ErrorType } from "../interfaces/person";
 import Ok from "../components/buttons/Ok";
-import "../styles/Error.css";
+import "../styles/Modals.css";
 const Error = () => {
   const error = useRouteError() as ErrorType;
   return (

@@ -90,3 +90,9 @@
 .groups--name {
   margin: 0 0 0 0.2rem;
 }
+
+.create--person {
+  display: flex;
+  justify-content: end;
+  padding-right: 1rem;
+}

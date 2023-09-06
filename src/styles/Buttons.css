@@ -1,14 +1,23 @@
-.btn--ok {
+.btn--ok,
+.btn--exit {
   margin-top: 1rem;
   width: 3rem;
   border: none;
   background-color: #fff;
 }
-.ok {
+.ok,
+.exit {
   margin: 0;
   transition: 0.2s ease-in;
 }
-.btn--ok :hover {
+.btn--exit {
+  position: absolute;
+  top: -2.5rem;
+  right: -3rem;
+  width: 1.6rem;
+}
+.btn--ok :hover,
+.btn--exit:hover {
   transform: scale(1.05);
   transition: 0.2s ease-in;
 }

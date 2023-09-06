@@ -26,3 +26,12 @@ export interface CreatePersonProps {
 export interface ErrorType {
   message: string;
 }
+
+export interface createFrom {
+  name: string;
+  age: number;
+  groups: string[];
+  formData: () => {
+    get: (key: string) => string | null;
+  };
+}

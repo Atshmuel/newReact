@@ -4,7 +4,7 @@ import ok from "../../assets/icons/ok.svg";
 
 const Ok = () => {
   return (
-    <button className="btn--ok">
+    <button type="submit" className="btn--ok">
       <p className="ok">
         <img src={ok} alt="OK" />
       </p>
