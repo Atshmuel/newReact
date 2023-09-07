@@ -26,10 +26,11 @@ const router = createBrowserRouter(
     <Route path="/" element={<RootLayout />}>
       <Route path={"/"} element={""} />
       <Route path={"/Search"} element={"/"} />
+      {/* Persons layout */}
       <Route
         path={"/Persons"}
         element={<PersonLayout />}
-        errorElement={<Error />}
+        errorElement={<Error url={""} />}
       >
         <Route
           path={"create"}
@@ -49,7 +50,7 @@ const router = createBrowserRouter(
           />
         </Route>
       </Route>
-
+      {/* Groups layout */}
       <Route path={"/Groups"} element={"/"} />
       <Route path={"/success"} element={<SuccessModal />} />
       <Route path={"*"} element={<NotFound />} />

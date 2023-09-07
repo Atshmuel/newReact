@@ -8,10 +8,12 @@ const SuccessModal = () => {
     <div className="success--overlay">
       <div className="success--details">
         <img className="success--icon" src={success} alt="Success" />
-        <p className="success--message">Create method successfully completed</p>
+        <p className="success--message">
+          Your request has been successfully completed
+        </p>
         <Link to={`/persons/personinfo`}>
           <Ok />
-        </Link>
+        </Link>{" "}
       </div>
     </div>
   );

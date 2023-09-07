@@ -96,3 +96,7 @@
   justify-content: end;
   padding-right: 1rem;
 }
+
+.persons--list {
+  margin-top: 3rem;
+}

@@ -2,7 +2,7 @@ import { Link, useRouteError } from "react-router-dom";
 import { ErrorType } from "../interfaces/person";
 import Ok from "../components/buttons/Ok";
 import "../styles/Modals.css";
-const Error = () => {
+const Error = ({ url }: { url: string }) => {
   const error = useRouteError() as ErrorType;
   return (
     <div className="error--modal">
@@ -14,7 +14,7 @@ const Error = () => {
           <p className="error--message">{error.message}</p>
         </div>
         <div className="error--footer">
-          <Link to={"/"}>
+          <Link to={`${url}`}>
             <Ok />
           </Link>
         </div>

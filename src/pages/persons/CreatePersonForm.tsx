@@ -1,4 +1,4 @@
-import { Form, redirect, useActionData } from "react-router-dom";
+import { Form, Link, redirect, useActionData } from "react-router-dom";
 import Ok from "../../components/buttons/Ok";
 import Exit from "../../components/buttons/Exit";
 import "../../styles/Create.css";
@@ -10,7 +10,9 @@ export const CreatePersonForm = () => {
     <div className="create--form form">
       <div className="form--info">
         <div className="form--header">
-          <Exit />
+          <Link to={"/persons"}>
+            <Exit />
+          </Link>
           <h2 className="modal--title">Create new person</h2>
         </div>
         <Form method="post" action="/persons/create">

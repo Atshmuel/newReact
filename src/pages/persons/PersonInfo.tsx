@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLoaderData, Link, Outlet } from "react-router-dom";
 import { z } from "zod";
 import { Person } from "../../types/PersonTypes";
@@ -6,9 +7,24 @@ import info from "../../assets/icons/into person.svg";
 import trash from "../../assets/icons/trash.png";
 import update from "../../assets/icons/update.png";
 import "../../styles/List.css";
+import Modal from "../../components/Modal";
 
 export const PersonInfo = () => {
+  const [modal, setShowModal] = useState<boolean>(false);
+  // const [isDeleted, setIsDeleted] = useState<boolean>(false);
+
   const persons = useLoaderData() as Person[];
+  const handleDelete = async (id: string) => {
+    const res = await fetch(
+      `${import.meta.env.VITE_SERVER_URL}/person/delete?id=${id}`,
+      { method: "DELETE" }
+    );
+    if (!res.ok) {
+      const { message } = await res.json();
+      throw Error(`${message}`);
+    }
+  };
+
   if (!persons) {
     return <div>Loading...</div>;
   }
@@ -32,11 +48,15 @@ export const PersonInfo = () => {
                 <button
                   className="btn del--button"
                   onClick={() => {
-                    // handleDelete(per._id.toString());
+                    handleDelete(per._id.toString());
+                    setShowModal(true);
                   }}
                 >
                   <img className="icon" src={trash} alt="Trash" />
                 </button>
+                {modal ? (
+                  <Modal toggleModal={setShowModal} name={per.name}></Modal>
+                ) : null}
                 <button
                   className="btn update--button"
                   onClick={() => {
