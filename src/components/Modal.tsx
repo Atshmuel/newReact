@@ -1,10 +1,8 @@
 import React from "react";
 import { modalProp } from "../interfaces/modals";
-import Ok from "./buttons/Ok";
 import Exit from "./buttons/Exit";
 
 const Modal: React.FC<modalProp> = ({ toggleModal, name, type }) => {
-  console.log("🚀 ~ file: Modal.tsx:39 ~ name:", name);
   const message: string =
     type === "delete"
       ? `${name} has been deleted!`

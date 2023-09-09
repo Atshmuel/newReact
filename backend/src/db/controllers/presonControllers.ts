@@ -35,7 +35,7 @@ export const createPerson = async (person: Person, res: Response) => {
     }
     res.status(200).json({ message: retrunedMessage });
   } catch (error) {
-    res.status(400).json({ message: error });
+    res.status(400).json({ message: retrunedMessage });
   }
 };
 //Removes person by id

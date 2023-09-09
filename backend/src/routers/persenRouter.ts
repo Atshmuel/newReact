@@ -2,6 +2,7 @@ import { Router } from "express";
 import * as presonController from "../db/controllers/presonControllers";
 import * as personSchemas from "../validator/personSchema";
 import * as interfaces from "../interfaces/interfaces";
+import { log } from "console";
 const personRouter = Router();
 
 personRouter.get("/search", async (req, res) => {

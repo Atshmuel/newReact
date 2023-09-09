@@ -148,7 +148,6 @@ export const PersonInfo = () => {
 //loader fucntion + zod validation
 export const personsLoader = async () => {
   const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/person/showall`);
-  console.log(res.ok);
 
   if (!res.ok) {
     throw new Error(

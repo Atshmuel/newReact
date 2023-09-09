@@ -6,6 +6,7 @@ import { createFrom } from "../../interfaces/person";
 export const CreatePersonForm = () => {
   const data: { errorname: string; errorage: string; errorgroup: string } =
     useActionData();
+
   return (
     <div className="create--form form">
       <div className="form--info">
@@ -22,7 +23,8 @@ export const CreatePersonForm = () => {
               <input
                 type="text"
                 name="name"
-                value={Math.floor(Math.random() * 9999)}
+                // value={Math.floor(Math.random() * 9999)}
+                // value={1554}
                 required
               />
               {data && data.errorname && <p>{data.errorname}</p>}
@@ -34,7 +36,12 @@ export const CreatePersonForm = () => {
             </label>
             <label>
               <span>Person Groups:</span>
-              <input type="text" name="groups" value={1} required />
+              <input
+                type="text"
+                name="groups"
+                // value={"1"}
+                placeholder={`Should be Group1,Group2,...`}
+              />
             </label>
             <Ok />
           </div>
@@ -49,8 +56,10 @@ export const createAction = async ({ request }: { request: createFrom }) => {
   const subbmition = {
     name: data.get("name"),
     age: Number(data.get("age")),
-    groups: [data.get("groups")],
+    groups:
+      data.get("groups")!.length <= 0 ? [] : data.get("groups")?.split(","),
   };
+
   if (subbmition.name!.length <= 2) {
     return { errorname: "Name must be 2 letter or more" };
   }
@@ -64,9 +73,9 @@ export const createAction = async ({ request }: { request: createFrom }) => {
   });
 
   if (!res.ok) {
-    throw Error(
-      "Person already exist, please try again or just update the person."
-    );
+    const { message } = await res.json();
+    throw Error(`${message}`);
   }
-  return redirect("/success");
+
+  return redirect("/persons/personinfo");
 };
