@@ -43,6 +43,7 @@
 .icon {
   transition: transform 0.3s ease-in-out;
   width: 1.45rem;
+  margin-left: 0.3rem;
 }
 
 .icon:hover {

@@ -1,4 +1,7 @@
+import { PerName } from "./person";
+
 export interface modalProp {
-  toggleModal: React.Dispatch<React.SetStateAction<boolean>>;
-  name: string;
+  toggleModal: () => void;
+  name: PerName | string | undefined;
+  type: string;
 }

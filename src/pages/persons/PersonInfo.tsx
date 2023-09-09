@@ -8,13 +8,26 @@ import trash from "../../assets/icons/trash.png";
 import update from "../../assets/icons/update.png";
 import "../../styles/List.css";
 import Modal from "../../components/Modal";
+// import { PerName } from "../../interfaces/person";
 
 export const PersonInfo = () => {
-  const [modal, setShowModal] = useState<boolean>(false);
-  // const [isDeleted, setIsDeleted] = useState<boolean>(false);
-
   const persons = useLoaderData() as Person[];
-  const handleDelete = async (id: string) => {
+  const [allPersons, setPersons] = useState<Person[]>(persons);
+  const initialModalStates = persons.map(() => false);
+  const [modals, setModals] = useState<boolean[]>(initialModalStates);
+  const [deletedPersonName, setDeletePersonName] = useState<string>();
+
+  const openModal = (personIndex: number) => {
+    const updatedModals = [...modals];
+    updatedModals[personIndex] = true;
+    setModals(updatedModals);
+  };
+  const closeModal = (personIndex: number) => {
+    const updatedModals = [...modals];
+    updatedModals[personIndex] = false;
+    setModals(updatedModals);
+  };
+  const handleDelete = async (id: string, name: string) => {
     const res = await fetch(
       `${import.meta.env.VITE_SERVER_URL}/person/delete?id=${id}`,
       { method: "DELETE" }
@@ -23,14 +36,18 @@ export const PersonInfo = () => {
       const { message } = await res.json();
       throw Error(`${message}`);
     }
+    setDeletePersonName(name);
+    setPersons((prevPersons) =>
+      prevPersons.filter((person) => person._id !== id)
+    );
   };
 
-  if (!persons) {
+  if (!allPersons) {
     return <div>Loading...</div>;
   }
   return (
     <div className="persons--list">
-      {persons.length <= 0 ? (
+      {allPersons.length <= 0 ? (
         <div className="no--persons">
           <img src={error} alt="Alert" className="icon error--icon" />
           <p>
@@ -42,21 +59,19 @@ export const PersonInfo = () => {
         </div>
       ) : (
         <>
-          {persons.map((per, i) => (
+          {allPersons.map((per, i) => (
             <div className="person--info" key={per._id}>
               <div className="buttons">
                 <button
                   className="btn del--button"
                   onClick={() => {
-                    handleDelete(per._id.toString());
-                    setShowModal(true);
+                    openModal(i);
+                    handleDelete(per._id.toString(), per.name);
                   }}
                 >
                   <img className="icon" src={trash} alt="Trash" />
                 </button>
-                {modal ? (
-                  <Modal toggleModal={setShowModal} name={per.name}></Modal>
-                ) : null}
+
                 <button
                   className="btn update--button"
                   onClick={() => {
@@ -114,6 +129,13 @@ export const PersonInfo = () => {
                   .concat(per.name.slice(1))}
                 ? then click on the person icon at the top right corner
               </p>
+              {modals[i] ? (
+                <Modal
+                  toggleModal={() => closeModal(i)}
+                  name={deletedPersonName}
+                  type="delete"
+                ></Modal>
+              ) : null}
             </div>
           ))}
         </>
@@ -126,8 +148,10 @@ export const PersonInfo = () => {
 //loader fucntion + zod validation
 export const personsLoader = async () => {
   const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/person/showall`);
+  console.log(res.ok);
+
   if (!res.ok) {
-    throw Error(
+    throw new Error(
       `There was a problem fetching the data from the server, please try again later.`
     );
   }

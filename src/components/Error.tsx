@@ -4,6 +4,8 @@ import Ok from "../components/buttons/Ok";
 import "../styles/Modals.css";
 const Error = ({ url }: { url: string }) => {
   const error = useRouteError() as ErrorType;
+  console.log(error);
+
   return (
     <div className="error--modal">
       <div className="error--details">

@@ -91,10 +91,39 @@
   margin: 0 0 0 0.2rem;
 }
 
-.create--person {
+.create-show--person {
   display: flex;
+  flex-direction: row-reverse;
   justify-content: end;
+  align-items: center;
   padding-right: 1rem;
+}
+.show:hover::before {
+  content: "Show all persons";
+  position: absolute;
+  top: -5%;
+  right: 0.5%;
+  width: max-content;
+  height: 1.5rem;
+  padding: 0.4rem 0.6rem 0 0.6rem;
+  margin: 0 3rem 3.5rem 0;
+  background-color: rgba(95, 158, 160, 0.5);
+  color: #ffffff;
+  border-radius: 0px 50px;
+}
+
+.create:hover::before {
+  content: "Create new person";
+  position: absolute;
+  top: -5%;
+  right: -1%;
+  width: max-content;
+  height: 1.5rem;
+  padding: 0.4rem 0.6rem 0 0.6rem;
+  margin: 0 3rem 3.5rem 0;
+  background-color: rgba(95, 158, 160, 0.5);
+  color: #ffffff;
+  border-radius: 0px 50px;
 }
 
 .persons--list {
