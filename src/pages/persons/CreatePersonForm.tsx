@@ -23,15 +23,19 @@ export const CreatePersonForm = () => {
               <input
                 type="text"
                 name="name"
-                // value={Math.floor(Math.random() * 9999)}
-                // value={1554}
+                placeholder="Person name..."
                 required
               />
               {data && data.errorname && <p>{data.errorname}</p>}
             </label>
             <label>
               <span>Person Age:</span>
-              <input type="number" name="age" value={1} required />
+              <input
+                type="number"
+                name="age"
+                placeholder="Person age..."
+                required
+              />
               {data && data.errorage && <p>{data.errorage}</p>}
             </label>
             <label>
@@ -39,7 +43,6 @@ export const CreatePersonForm = () => {
               <input
                 type="text"
                 name="groups"
-                // value={"1"}
                 placeholder={`Should be Group1,Group2,...`}
               />
             </label>

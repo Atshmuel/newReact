@@ -7,12 +7,13 @@ import { deleteFromGroup, existInGroups, groupExist } from "./helper"; //cross p
 //Creating person using peron schema validation
 export const createPerson = async (person: Person, res: Response) => {
   let retrunedMessage: string = ""; //init a returned message
+  const groupsToadd = Array.from(new Set(person.groups));
   try {
     if (!(await PersonModel.findOne({ name: person.name }))) {
       const newPerson = await PersonModel.create({
         name: person.name,
         age: person.age,
-        groups: person.groups,
+        groups: groupsToadd,
       });
       retrunedMessage = `${person.name} has been created`;
     } else {
