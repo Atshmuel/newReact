@@ -1,0 +1,74 @@
+.search--page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.search--input {
+  width: 20rem;
+  height: 2rem;
+  padding-left: 10px;
+  margin-right: 10px;
+  background-color: rgb(129, 166, 255);
+  border: none;
+  border-radius: 20px;
+  transition: 0.2s all ease-in-out;
+}
+.search--input:focus {
+  background-color: #fff;
+  outline: none;
+  border: 1px solid rgb(129, 166, 255);
+  transition: 0.2s all ease-in-out;
+}
+.search--input::placeholder {
+  color: #ffffff80;
+}
+.search--input:focus::placeholder {
+  color: rgb(129, 166, 255, 0.7);
+}
+
+.search-button {
+  border-style: none;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(129, 166, 255);
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  top: 6px;
+  right: 42.4%;
+  width: 30px;
+  height: 30px;
+}
+
+.search--icon {
+  color: #fff;
+}
+.data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.data p {
+  width: 300px;
+  margin: 5px;
+  padding: 10px;
+  border-bottom: 1px solid rgb(129, 166, 255, 0.5);
+}
+
+select {
+  height: 2rem;
+  border: 2px solid rgb(129, 166, 255, 0.5);
+  border-radius: 10px;
+}
+
+select:focus {
+  border-bottom: 1px solid rgb(129, 166, 255, 0.5);
+  outline: none;
+}

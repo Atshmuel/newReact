@@ -16,6 +16,7 @@ import RootLayout from "./layouts/RootLayout";
 import PersonDetails, {
   personDetailLoader,
 } from "./pages/persons/PersonDetails";
+import SearchLayout from "./layouts/SearchLayout";
 import {
   createAction,
   CreatePersonForm,
@@ -25,7 +26,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       <Route path={"/"} element={""} />
-      <Route path={"/Search"} element={"/"} />
+      <Route path={"/Search"} element={<SearchLayout />} />
       {/* Persons layout */}
       <Route
         path={"/Persons"}

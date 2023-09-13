@@ -119,9 +119,7 @@ export const displayPersonGroups = async (name: Name, res: Response) => {
   try {
     const person = await PersonModel.findOne({ name: name.name });
     const showGroups = async () => {
-      res.status(200).json({
-        message: `Here are all the group's ${person?.name}'s in: ${person?.groups}`,
-      });
+      res.status(200).json(person);
     };
     person
       ? showGroups()
@@ -135,7 +133,7 @@ export const displayAllPersons = async (res: Response) => {
   try {
     const person = await PersonModel.find();
     res.status(200).json(person);
-  } catch (error: any) {
+  } catch (error) {
     throw new Error(error);
   }
 };

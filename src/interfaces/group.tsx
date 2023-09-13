@@ -1,7 +1,7 @@
 export interface Group {
   _id: number | string;
   groupName: string;
-  persons: number;
+  persons: string[];
   groups: string[];
   fathers: string[];
   __v: number;

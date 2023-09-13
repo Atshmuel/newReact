@@ -11,7 +11,7 @@ export const CreatePersonForm = () => {
     <div className="create--form form">
       <div className="form--info">
         <div className="form--header">
-          <Link to={"/persons"}>
+          <Link to={"/persons/personinfo"}>
             <Exit />
           </Link>
           <h2 className="modal--title">Create new person</h2>
@@ -63,7 +63,7 @@ export const createAction = async ({ request }: { request: createFrom }) => {
       data.get("groups")!.length <= 0 ? [] : data.get("groups")?.split(","),
   };
 
-  if (subbmition.name!.length <= 2) {
+  if (subbmition.name!.length <= 1) {
     return { errorname: "Name must be 2 letter or more" };
   }
   if (subbmition.age === 0) {
