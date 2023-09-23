@@ -12,7 +12,7 @@ const SearchLayout = () => {
   const [data, setData] = useState<(Person & Group) | null>();
   const [isPending, setIsPending] = useState<boolean | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [url, setUrl] = useState<string>("/person/search?id=");
+  const [url, setUrl] = useState<string>("");
   const [searchType, setSearchType] = useState<string>("id");
 
   const handleSelect = (e: { target: { value: string } }) => {
@@ -30,7 +30,7 @@ const SearchLayout = () => {
       ? (setUrl("/group/search?groupName="), setSearchType("name"))
       : (setUrl("/person/search/ingroup?name="), setSearchType("name"));
   };
-  const handleFocus = (e: { target: { value: string } }) => {
+  const handleBlur = (e: { target: { value: string } }) => {
     e.target.value = "";
   };
   const handleChange = (e: { target: { value: string } }) => {
@@ -72,7 +72,7 @@ const SearchLayout = () => {
             type="text"
             placeholder="Type you query here..."
             className="search--input"
-            onFocus={handleFocus}
+            onBlur={handleBlur}
             autoComplete="off"
           />
           <button className="search-button">
@@ -85,7 +85,15 @@ const SearchLayout = () => {
             }
           </button>
         </form>
-        <select name="options" id="search--option" onChange={handleSelect}>
+        <select
+          name="options"
+          id="search--option"
+          onChange={handleSelect}
+          required
+        >
+          <option value="default" disabled selected>
+            --Choose search method--
+          </option>
           <option id="option--1" value="PerId">
             By Person ID
           </option>
