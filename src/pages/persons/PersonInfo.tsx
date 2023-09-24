@@ -7,19 +7,36 @@ import info from "../../assets/icons/into person.svg";
 import trash from "../../assets/icons/trash.png";
 import update from "../../assets/icons/update.png";
 import "../../styles/List.css";
-import Modal from "../../components/Modal";
-// import { PerName } from "../../interfaces/person";
+import DeleteModal from "../../components/DeleteModal";
+import UpdateModal from "../../components/UpdateModal";
 
 export const PersonInfo = () => {
   const persons = useLoaderData() as Person[];
   const [allPersons, setPersons] = useState<Person[]>(persons);
-  const initialModalStates = persons.map(() => false);
-  const [modals, setModals] = useState<boolean[]>(initialModalStates);
-  const [deletedPersonName, setDeletePersonName] = useState<string>();
+  const [personName, setPersonName] = useState<string>();
+  const [personInfo, setPersonInfo] = useState<{
+    name: string;
+    age: number;
+    groups: string[];
+    id: string;
+  }>({
+    name: "",
+    age: 0,
+    groups: [],
+    id: "",
+  });
 
-  const openModal = (personIndex: number) => {
+  const initialModalStates = persons.map(() => false);
+  const initialModalTypes = persons.map(() => "");
+  const [modals, setModals] = useState<boolean[]>(initialModalStates);
+  const [modalType, setModalType] = useState<string[]>(initialModalTypes);
+
+  const openModal = (personIndex: number, type: string) => {
     const updatedModals = [...modals];
+    const updateModalsType = [...modalType];
     updatedModals[personIndex] = true;
+    updateModalsType[personIndex] = `${type}`;
+    setModalType(updateModalsType);
     setModals(updatedModals);
   };
   const closeModal = (personIndex: number) => {
@@ -36,10 +53,18 @@ export const PersonInfo = () => {
       const { message } = await res.json();
       throw Error(`${message}`);
     }
-    setDeletePersonName(name);
+    setPersonName(name);
     setPersons((prevPersons) =>
       prevPersons.filter((person) => person._id !== id)
     );
+  };
+  const handleUpdate = async (
+    id: string,
+    name: string,
+    age: number,
+    groups: string[]
+  ) => {
+    setPersonInfo({ id, groups, age, name });
   };
 
   if (!allPersons) {
@@ -65,7 +90,7 @@ export const PersonInfo = () => {
                 <button
                   className="btn del--button"
                   onClick={() => {
-                    openModal(i);
+                    openModal(i, "delete");
                     handleDelete(per._id.toString(), per.name);
                   }}
                 >
@@ -75,9 +100,13 @@ export const PersonInfo = () => {
                 <button
                   className="btn update--button"
                   onClick={() => {
-                    // const upModals = [...updateModal];
-                    // upModals[i] = true;
-                    // setUpdateModal(upModals);
+                    openModal(i, "update");
+                    handleUpdate(
+                      per._id.toString(),
+                      per.name,
+                      per.age,
+                      per.groups
+                    );
                   }}
                 >
                   <img
@@ -86,18 +115,6 @@ export const PersonInfo = () => {
                     alt="Update"
                   />
                 </button>
-                {/* {updateModal[i] && (
-                  <PersonUpdate
-                    closeModal={() => {
-                      const upModals = [...updateModal];
-                      upModals[i] = false;
-                      setUpdateModal(upModals);
-                    }}
-                    onPersonCreatedOrUpdate={handlePersonUpdated}
-                    id={per._id}
-                    name={per.name}
-                  />
-                )} */}
 
                 <Link to={per._id.toString()}>
                   <button className="btn info--button">
@@ -129,12 +146,21 @@ export const PersonInfo = () => {
                   .concat(per.name.slice(1))}
                 ? then click on the person icon at the top right corner
               </p>
-              {modals[i] ? (
-                <Modal
+
+              {modals[i] && modalType[i] === "delete" ? (
+                <DeleteModal
                   toggleModal={() => closeModal(i)}
-                  name={deletedPersonName}
+                  name={personName}
                   type="delete"
-                ></Modal>
+                ></DeleteModal>
+              ) : modals[i] && modalType[i] === "update" ? (
+                <UpdateModal
+                  toggleModal={() => closeModal(i)}
+                  name={personInfo.name}
+                  age={personInfo.age}
+                  groups={personInfo.groups}
+                  id={personInfo.id}
+                ></UpdateModal>
               ) : null}
             </div>
           ))}

@@ -2,7 +2,9 @@ import React from "react";
 import { modalProp } from "../interfaces/modals";
 import Exit from "./buttons/Exit";
 
-const Modal: React.FC<modalProp> = ({ toggleModal, name, type }) => {
+const DeleteModal: React.FC<modalProp> = ({ toggleModal, name, type }) => {
+  console.log(toggleModal, name, type);
+
   const message: string =
     type === "delete"
       ? `${name} has been deleted!`
@@ -30,4 +32,4 @@ const Modal: React.FC<modalProp> = ({ toggleModal, name, type }) => {
   );
 };
 
-export default Modal;
+export default DeleteModal;

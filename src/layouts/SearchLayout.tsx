@@ -4,7 +4,7 @@ import "../styles/Search.css";
 import { useState } from "react";
 import { Person } from "../interfaces/person";
 import { Group } from "../interfaces/group";
-import Loading from "../components/loader";
+import Loader from "../components/Loader";
 
 const SearchLayout = () => {
   const searchInput: any = document.getElementById("input");
@@ -30,8 +30,8 @@ const SearchLayout = () => {
       ? (setUrl("/group/search?groupName="), setSearchType("name"))
       : (setUrl("/person/search/ingroup?name="), setSearchType("name"));
   };
-  const handleBlur = (e: { target: { value: string } }) => {
-    e.target.value = "";
+  const handleBlur = () => {
+    searchInput.value = "";
   };
   const handleChange = (e: { target: { value: string } }) => {
     if (e.target.value.length <= 0) return;
@@ -72,7 +72,6 @@ const SearchLayout = () => {
             type="text"
             placeholder="Type you query here..."
             className="search--input"
-            onBlur={handleBlur}
             autoComplete="off"
           />
           <button className="search-button">
@@ -88,7 +87,9 @@ const SearchLayout = () => {
         <select
           name="options"
           id="search--option"
-          onChange={handleSelect}
+          onChange={(e) => {
+            handleSelect(e), handleBlur();
+          }}
           required
         >
           <option value="default" disabled selected>
@@ -113,7 +114,7 @@ const SearchLayout = () => {
       </div>
       <div className="data">
         {error && <div>{`${error}`}</div>}
-        {!error && isPending && <Loading />}
+        {!error && isPending && <Loader />}
         {(url.includes("/person/search?id") ||
           url.includes("/person/search?name")) &&
           data && (
