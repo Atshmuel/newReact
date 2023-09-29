@@ -46,9 +46,9 @@ const UpdateModal: React.FC<UpdateProps> = ({
         data.name === formData.name &&
         data.groups === formData.groups)
     ) {
-      setErrorMessage("There is nothing to update...");
       const { message } = await res.json();
-      throw Error(message);
+      setErrorMessage(`${message}`);
+      return;
     }
     toggleUpdated();
     toggleModal();

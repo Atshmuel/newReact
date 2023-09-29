@@ -4,8 +4,7 @@ import Exit from "../../components/buttons/Exit";
 import "../../styles/Create.css";
 import { createFrom } from "../../interfaces/person";
 export const CreatePersonForm = () => {
-  const data: { errorname: string; errorage: string; errorgroup: string } =
-    useActionData();
+  const data: { errorage: string } = useActionData();
 
   return (
     <div className="create--form form">
@@ -26,7 +25,6 @@ export const CreatePersonForm = () => {
                 placeholder="Person name..."
                 required
               />
-              {data && data.errorname && <p>{data.errorname}</p>}
             </label>
             <label>
               <span>Person Age:</span>
@@ -63,11 +61,8 @@ export const createAction = async ({ request }: { request: createFrom }) => {
       data.get("groups")!.length <= 0 ? [] : data.get("groups")?.split(","),
   };
 
-  if (subbmition.name!.length <= 1) {
-    return { errorname: "Name must be 2 letter or more" };
-  }
-  if (subbmition.age === 0) {
-    return { errorage: "Age cannot be 0" };
+  if (subbmition.age < 1 || subbmition.age > 120) {
+    return { errorage: "Please choose age between 1-120" };
   }
   const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/person/create`, {
     method: "POST",

@@ -22,6 +22,7 @@ import {
   CreatePersonForm,
 } from "../src/pages/persons/CreatePersonForm";
 import SuccessModal from "./components/Success";
+import GroupsLayout from "./layouts/GroupsLayout";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
@@ -52,7 +53,24 @@ const router = createBrowserRouter(
         </Route>
       </Route>
       {/* Groups layout */}
-      <Route path={"/Groups"} element={"/"} />
+      <Route path={"/Groups"} element={<GroupsLayout />}>
+        <Route
+          path={"create"}
+          // element={<CreatePersonForm />} Should modify to create person and group in one form
+          action={createAction}
+        />
+
+        <Route
+          path={"PersonInfo"}
+          // element={<GroupInfo />} should create the page
+          loader={personsLoader}
+        />
+        <Route
+          path={":id"}
+          // element={<GroupDetails />} should create the page
+          loader={personDetailLoader}
+        />
+      </Route>
       <Route path={"/success"} element={<SuccessModal />} />
       <Route path={"*"} element={<NotFound />} />
     </Route>

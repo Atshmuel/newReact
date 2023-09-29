@@ -1,5 +1,3 @@
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../styles/Search.css";
 import { useState } from "react";
 import { Person } from "../interfaces/person";

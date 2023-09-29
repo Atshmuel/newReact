@@ -49,20 +49,19 @@
 }
 
 .modal--details {
-  animation: slide-up 0.2s ease-in-out 0.1s both;
+  animation: slide-up 0.2s ease-in-out 0.2s both;
   display: flex;
   align-items: center;
   padding: 0 1rem;
   position: fixed;
-  top: 95%;
+  top: 93%;
   left: 0;
   width: 100%;
   height: 3rem;
   background-color: #ffffff50;
   backdrop-filter: blur(20px);
   border-top: 2px solid rgba(93, 93, 93, 0.149);
-
-  z-index: 1000;
+  z-index: 20;
 }
 
 .modal--header {
@@ -74,16 +73,14 @@
   margin: 0;
   padding: 0 1rem;
 }
-.modal--footer {
-  position: relative;
-  bottom: -60%;
-  left: 74%;
+.modal--footer::before {
+  content: "X";
+  position: absolute;
+  top: 22%;
+  right: 5%;
+  cursor: pointer;
 }
 
-.modal--footer p {
-  padding: 0;
-  margin: 0;
-}
 .update-fail {
   color: red;
   font-weight: 800;
@@ -93,11 +90,11 @@
 
 @keyframes slide-up {
   0% {
-    transform: translateY(100%); /* Start off-screen */
-    opacity: 0; /* Start invisible */
+    transform: translateY(100%);
+    opacity: 0;
   }
   100% {
-    transform: translateY(0); /* Slide up to its final position */
-    opacity: 1; /* Fade in */
+    transform: translateY(0);
+    opacity: 1;
   }
 }

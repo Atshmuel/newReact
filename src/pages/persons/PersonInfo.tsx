@@ -82,7 +82,7 @@ export const PersonInfo = () => {
   };
 
   useEffect(() => {
-    updated.forEach(async (isUpdated, i) => {
+    updated.forEach(async (isUpdated) => {
       if (!isUpdated) {
         return;
       }
