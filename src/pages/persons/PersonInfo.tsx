@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLoaderData, Link, Outlet } from "react-router-dom";
 import { z } from "zod";
 import { Person } from "../../types/PersonTypes";
@@ -80,6 +80,18 @@ export const PersonInfo = () => {
   ) => {
     setPersonInfo({ id, groups, age, name });
   };
+
+  useEffect(() => {
+    updated.forEach(async (isUpdated, i) => {
+      if (!isUpdated) {
+        return;
+      }
+      const res = await fetch(
+        `${import.meta.env.VITE_SERVER_URL}/person/showall`
+      );
+      setPersons(await res.json());
+    });
+  }, [updated]);
 
   if (!allPersons) {
     return <div>Loading...</div>;

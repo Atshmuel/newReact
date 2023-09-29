@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { UpdateProps } from "../interfaces/modals";
 import Exit from "./buttons/Exit";
 import Ok from "./buttons/Ok";
+import { Navigate } from "react-router-dom";
 
 const UpdateModal: React.FC<UpdateProps> = ({
   toggleModal,
@@ -11,7 +12,7 @@ const UpdateModal: React.FC<UpdateProps> = ({
   groups,
   toggleUpdated,
 }) => {
-  const data = { name, age, groups };
+  const data = { name, age, groups }; //Used to make sure that the info has been changed, if hasn't dose not fetching the data to the server
   const [formData, setFromData] = useState({
     name: `${name}`,
     age: age,
