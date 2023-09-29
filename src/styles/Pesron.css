@@ -42,7 +42,7 @@
   background-color: #fff;
   position: relative;
   border: 1px solid rgb(0, 0, 0, 0.1);
-  box-shadow: 1px 3px 5px cadetblue;
+  box-shadow: 1px 3px 5px rgba(129, 167, 255, 0.6);
   margin: 1rem;
   padding: 2rem;
   border-radius: 8px;
@@ -98,8 +98,9 @@
   align-items: center;
   padding-right: 1rem;
 }
-.show:hover::before {
-  content: "Show all persons";
+
+.show:hover::before,
+.create:hover::before {
   position: absolute;
   top: -5%;
   right: 0.5%;
@@ -107,23 +108,18 @@
   height: 1.5rem;
   padding: 0.4rem 0.6rem 0 0.6rem;
   margin: 0 3rem 3.5rem 0;
-  background-color: rgba(95, 158, 160, 0.5);
+  background-color: rgba(129, 167, 255, 0.6);
   color: #ffffff;
   border-radius: 0px 50px;
+}
+.show:hover::before {
+  content: "Show all persons";
 }
 
 .create:hover::before {
   content: "Create new person";
-  position: absolute;
   top: -5%;
   right: -1%;
-  width: max-content;
-  height: 1.5rem;
-  padding: 0.4rem 0.6rem 0 0.6rem;
-  margin: 0 3rem 3.5rem 0;
-  background-color: rgba(95, 158, 160, 0.5);
-  color: #ffffff;
-  border-radius: 0px 50px;
 }
 
 .persons--list {

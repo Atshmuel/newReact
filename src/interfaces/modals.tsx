@@ -7,6 +7,7 @@ export interface modalProp {
 }
 export interface UpdateProps {
   toggleModal: () => void;
+  toggleUpdated: () => void;
   id: string;
   name: PerName | string;
   age: PerName | number;

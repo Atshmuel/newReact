@@ -84,6 +84,12 @@
   padding: 0;
   margin: 0;
 }
+.update-fail {
+  color: red;
+  font-weight: 800;
+  font-size: 1rem;
+  margin: 1rem 0;
+}
 
 @keyframes slide-up {
   0% {

@@ -9,21 +9,26 @@ const UpdateModal: React.FC<UpdateProps> = ({
   id,
   age,
   groups,
+  toggleUpdated,
 }) => {
-  //BUG should send groups as an array instad of an object
+  const data = { name, age, groups };
   const [formData, setFromData] = useState({
     name: `${name}`,
-    age: `${age}`,
-    groups: [`${groups}`],
+    age: age,
+    groups: groups,
   });
-  const handleInput = (e) => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const handleInput = (e: {
+    target: { name: string; value: string | number | string[] };
+  }) => {
     const { name, value } = e.target;
-    if (name === "groups") {
-      setFromData({ ...formData, [name]: [value] });
-    }
-    setFromData({ ...formData, [name]: value });
+    setErrorMessage(null);
+
+    if (name !== "groups") {
+      setFromData({ ...formData, [name]: value });
+    } else setFromData({ ...formData, [name]: value.split(",") });
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormDataEvent) => {
     e.preventDefault();
 
     const res = await fetch(
@@ -34,10 +39,19 @@ const UpdateModal: React.FC<UpdateProps> = ({
         body: JSON.stringify(formData),
       }
     );
-    if (!res.ok) {
+
+    if (
+      !res.ok ||
+      (data.age === formData.age &&
+        data.name === formData.name &&
+        data.groups === formData.groups)
+    ) {
+      setErrorMessage("There is nothing to update...");
       const { message } = await res.json();
-      console.log(message);
+      throw Error(message);
     }
+    toggleUpdated();
+    toggleModal();
   };
   return (
     <div className="create--form form">
@@ -82,6 +96,8 @@ const UpdateModal: React.FC<UpdateProps> = ({
                 onChange={handleInput}
               />
             </label>
+            <div className="update-fail">{errorMessage && errorMessage}</div>
+
             <Ok />
           </div>
         </form>

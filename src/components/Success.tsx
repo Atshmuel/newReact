@@ -1,18 +1,19 @@
 import { Link } from "react-router-dom";
 import success from "../assets/icons/success.svg";
 import "../styles/Modals.css";
-import Ok from "./buttons/Ok";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
 const SuccessModal = () => {
   return (
     <div className="success--overlay">
       <div className="success--details">
-        <img className="success--icon" src={success} alt="Success" />
+        <h2>Success</h2>{" "}
         <p className="success--message">
           Your request has been successfully completed
         </p>
         <Link to={`/persons/personinfo`}>
-          <Ok />
+          <FontAwesomeIcon icon={faCircleCheck} />
         </Link>{" "}
       </div>
     </div>

@@ -2,15 +2,21 @@ import { useState } from "react";
 import { useLoaderData, Link, Outlet } from "react-router-dom";
 import { z } from "zod";
 import { Person } from "../../types/PersonTypes";
-import error from "../../assets/icons/error.svg";
-import info from "../../assets/icons/into person.svg";
-import trash from "../../assets/icons/trash.png";
-import update from "../../assets/icons/update.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../styles/List.css";
 import DeleteModal from "../../components/DeleteModal";
 import UpdateModal from "../../components/UpdateModal";
+import {
+  faPenToSquare,
+  faPersonWalkingArrowRight,
+  faTrash,
+  faTriangleExclamation,
+} from "@fortawesome/free-solid-svg-icons";
+import Update from "../../components/buttons/Update";
 
 export const PersonInfo = () => {
+  //Bug with rendering the UI after updating
+  //Should add schima's and interfaces and types
   const persons = useLoaderData() as Person[];
   const [allPersons, setPersons] = useState<Person[]>(persons);
   const [personName, setPersonName] = useState<string>();
@@ -26,10 +32,12 @@ export const PersonInfo = () => {
     id: "",
   });
 
-  const initialModalStates = persons.map(() => false);
-  const initialModalTypes = persons.map(() => "");
-  const [modals, setModals] = useState<boolean[]>(initialModalStates);
-  const [modalType, setModalType] = useState<string[]>(initialModalTypes);
+  const initStates = persons.map(() => false);
+  const initTypes = persons.map(() => "");
+
+  const [updated, setUpdated] = useState<boolean[]>(initStates);
+  const [modals, setModals] = useState<boolean[]>(initStates);
+  const [modalType, setModalType] = useState<string[]>(initTypes);
 
   const openModal = (personIndex: number, type: string) => {
     const updatedModals = [...modals];
@@ -43,6 +51,12 @@ export const PersonInfo = () => {
     const updatedModals = [...modals];
     updatedModals[personIndex] = false;
     setModals(updatedModals);
+  };
+
+  const updatePerson = (personIndex: number) => {
+    const updatePersonInfo = [...updated];
+    updatePersonInfo[personIndex] = true;
+    setUpdated(updatePersonInfo);
   };
   const handleDelete = async (id: string, name: string) => {
     const res = await fetch(
@@ -74,18 +88,27 @@ export const PersonInfo = () => {
     <div className="persons--list">
       {allPersons.length <= 0 ? (
         <div className="no--persons">
-          <img src={error} alt="Alert" className="icon error--icon" />
+          <FontAwesomeIcon
+            icon={faTriangleExclamation}
+            size="3x"
+            color="#000000"
+          />
           <p>
             Sorry but there are no peresons existed currently,
             <br /> please create some by clicking the create icon in the top
             right corner
           </p>
-          <img src={error} alt="Alert" className="icon error--icon" />
+          <FontAwesomeIcon
+            icon={faTriangleExclamation}
+            size="3x"
+            color="#000000"
+          />{" "}
         </div>
       ) : (
         <>
           {allPersons.map((per, i) => (
             <div className="person--info" key={per._id}>
+              <div className="updated--note">{updated[i] && <Update />}</div>
               <div className="buttons">
                 <button
                   className="btn del--button"
@@ -94,7 +117,12 @@ export const PersonInfo = () => {
                     handleDelete(per._id.toString(), per.name);
                   }}
                 >
-                  <img className="icon" src={trash} alt="Trash" />
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    size="xl"
+                    color="#000000"
+                    className="icon"
+                  />
                 </button>
 
                 <button
@@ -109,19 +137,26 @@ export const PersonInfo = () => {
                     );
                   }}
                 >
-                  <img
-                    className="icon update--icon"
-                    src={update}
-                    alt="Update"
+                  <FontAwesomeIcon
+                    icon={faPenToSquare}
+                    size="xl"
+                    color="#000001"
+                    className="icon"
                   />
                 </button>
 
                 <Link to={per._id.toString()}>
                   <button className="btn info--button">
-                    <img className="icon info--icon" src={info} alt="Info" />
+                    <FontAwesomeIcon
+                      icon={faPersonWalkingArrowRight}
+                      size="xl"
+                      color="#000000"
+                      className="icon"
+                    />
                   </button>
                 </Link>
               </div>
+
               <h2 className="person--name">
                 {i + 1 + `. `}Here are some info about{": "}
                 <span className="name">
@@ -156,6 +191,7 @@ export const PersonInfo = () => {
               ) : modals[i] && modalType[i] === "update" ? (
                 <UpdateModal
                   toggleModal={() => closeModal(i)}
+                  toggleUpdated={() => updatePerson(i)}
                   name={personInfo.name}
                   age={personInfo.age}
                   groups={personInfo.groups}

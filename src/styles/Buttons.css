@@ -11,13 +11,29 @@
 }
 .btn--exit {
   position: absolute;
-  top: -2.5rem;
-  right: -3rem;
-  width: 1.6rem;
+  display: flex;
+  justify-content: center;
+  border: 1.5px solid rgb(129, 166, 255);
+  border-radius: 5px;
+  top: -3rem;
+  right: -4.5rem;
+  width: 2.5rem;
 }
 .btn--ok :hover,
 .btn--exit:hover {
   transform: scale(1.05);
   transition: 0.2s ease-in;
   cursor: pointer;
+}
+
+.btn-style {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  transition: 0.3s all;
+}
+
+.layout--icons:hover {
+  transition: 0.3s all;
+  transform: scale(1.1);
 }

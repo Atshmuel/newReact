@@ -5,9 +5,10 @@ import { useState } from "react";
 import { Person } from "../interfaces/person";
 import { Group } from "../interfaces/group";
 import Loader from "../components/Loader";
+import Search from "../components/buttons/Search";
 
 const SearchLayout = () => {
-  const searchInput: any = document.getElementById("input");
+  const searchInput = document.getElementById("input");
 
   const [data, setData] = useState<(Person & Group) | null>();
   const [isPending, setIsPending] = useState<boolean | null>(null);
@@ -31,15 +32,16 @@ const SearchLayout = () => {
       : (setUrl("/person/search/ingroup?name="), setSearchType("name"));
   };
   const handleBlur = () => {
-    searchInput.value = "";
+    searchInput!.value = "";
   };
   const handleChange = (e: { target: { value: string } }) => {
     if (e.target.value.length <= 0) return;
-    if (searchType === "id" && searchInput?.value.length !== 24) {
+    const searchValue: string = e.target.value.toLocaleLowerCase();
+    if (searchType === "id" && searchValue.length !== 24) {
       return;
     }
 
-    fetch(`${import.meta.env.VITE_SERVER_URL}${url}${e.target.value}`)
+    fetch(`${import.meta.env.VITE_SERVER_URL}${url}${searchValue}`)
       .then(async (res) => {
         if (!res.ok) {
           let { message }: { message: string | object } = await res.json();
@@ -74,15 +76,7 @@ const SearchLayout = () => {
             className="search--input"
             autoComplete="off"
           />
-          <button className="search-button">
-            {
-              <FontAwesomeIcon
-                icon={faMagnifyingGlass}
-                size="lg"
-                className="search--icon"
-              />
-            }
-          </button>
+          <Search />
         </form>
         <select
           name="options"

@@ -4,7 +4,7 @@ const NotFound = () => {
   return (
     <div className="not--found">
       <h2>Sorry...</h2>
-      <p>That page cannot be found</p>
+      <p>Could not find what you were looking for 😔</p>
       <Link to="/">Back to homepage...</Link>
     </div>
   );

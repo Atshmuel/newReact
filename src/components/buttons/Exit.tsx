@@ -1,13 +1,11 @@
-import React from "react";
 import "../../styles/Buttons.css";
-import exit from "../../assets/icons/cancel.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const Exit = () => {
   return (
     <button type="button" className="btn--exit">
-      <p className="ok">
-        <img src={exit} alt="X" />
-      </p>
+      <FontAwesomeIcon icon={faXmark} color="rgb(129, 166, 255)" size="2x" />
     </button>
   );
 };

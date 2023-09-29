@@ -42,19 +42,11 @@
 }
 .icon {
   transition: transform 0.3s ease-in-out;
-  width: 1.45rem;
-  margin-left: 0.3rem;
+  margin-bottom: 0.25rem;
 }
 
 .icon:hover {
-  transform: scale(1.2);
-}
-.update--icon {
-  transition: transform 0.3s ease-in-out;
-  width: 1.5rem;
-}
-.update--icon:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 .buttons {
@@ -76,4 +68,12 @@
 .person--age,
 .more--info {
   margin: 0;
+}
+
+.updated--note {
+  position: absolute;
+  top: -0.5rem;
+  left: -0.7rem;
+  z-index: 1;
+  padding: 0;
 }

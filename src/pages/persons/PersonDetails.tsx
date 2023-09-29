@@ -4,9 +4,10 @@ import {
   Link,
   LoaderFunction,
 } from "react-router-dom";
-import goback from "../../assets/icons/goback.svg";
 import "../../styles/Pesron.css";
 import { ID, Person } from "../../types/PersonTypes";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPersonWalkingArrowLoopLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function PersonDetails() {
   const { id } = useParams() as ID;
@@ -15,7 +16,11 @@ export default function PersonDetails() {
     <div className="person--modal">
       <div className="person--details">
         <Link to={"/persons/personinfo"}>
-          <img src={goback} alt="Go back" className="icon back--icon" />
+          <FontAwesomeIcon
+            icon={faPersonWalkingArrowLoopLeft}
+            className="icon"
+            color="#000000"
+          />
         </Link>
         <h2 className="person--name">
           <span className="name">
