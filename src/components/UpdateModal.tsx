@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { UpdateProps } from "../interfaces/modals";
 import Exit from "./buttons/Exit";
 import Ok from "./buttons/Ok";
-import { Navigate } from "react-router-dom";
 
 const UpdateModal: React.FC<UpdateProps> = ({
   toggleModal,
