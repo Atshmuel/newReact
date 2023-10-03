@@ -50,6 +50,15 @@ groupRouter.get("/search/all", async (req, res) => {
   if (error) return res.status(400).json({ message: error.message });
   await groupController.displayAllPerAndGro(nameStr, res);
 });
+groupRouter.get("/showall", async (req, res) => {
+  try {
+    await groupController.displayAllGroups(res);
+  } catch (error) {
+    res.status(400).json({
+      massage: `could not find any person in the db please create one.`,
+    });
+  }
+});
 
 groupRouter.post("/create", async (req, res) => {
   const groupName = req.body;
@@ -89,10 +98,6 @@ groupRouter.patch("/update", async (req, res) => {
 
 groupRouter.patch("/update/groupingroup", async (req, res) => {
   const { id, groupName } = req.body;
-  // const castedInGroupId = typeof inGroupId === "string" ? inGroupId : "";
-  // const castedGroupName = typeof groupName === "string" ? groupName : "";
-  // const idObject: interfaces.ID = { id: castedInGroupId };
-  // const nameObject: interfaces.Groups.newGroup = { groupName: castedGroupName };
 
   var { error } = groupSchemas.getDelUpGroupSchema.validate({ id });
   if (error) return res.status(400).json({ message: error.message });

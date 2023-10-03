@@ -19,3 +19,12 @@ export interface PersonsInGroup {
 export interface GroupsInGroup {
   groups: string[];
 }
+
+export interface createFrom {
+  groupName: string;
+  persons: string[];
+  groups: string[];
+  formData: () => {
+    get: (key: string) => string | null;
+  };
+}

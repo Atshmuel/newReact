@@ -1,19 +1,13 @@
-import {
-  useLoaderData,
-  useParams,
-  Link,
-  LoaderFunction,
-} from "react-router-dom";
-import "../../styles/Pesron.css";
-import { ID, Person } from "../../types/PersonTypes";
+import { useLoaderData, Link, LoaderFunction } from "react-router-dom";
+import "../../styles/PerAndGro.css";
+import { ID, Person } from "../../types/Types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonWalkingArrowLoopLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function PersonDetails() {
-  const { id } = useParams() as ID;
   const person = useLoaderData() as Person;
   return (
-    <div className="person--modal">
+    <div className="person--modal" key={person._id}>
       <div className="person--details">
         <Link to={"/persons/personinfo"}>
           <FontAwesomeIcon
@@ -39,7 +33,7 @@ export default function PersonDetails() {
           {person.groups.length > 0 ? (
             <>
               {person.groups.map((group: string, i: number) => (
-                <span className="groups--name">
+                <span className="groups--name" key={group}>
                   {i < person.groups.length - 1
                     ? " " + group + ","
                     : " " + group + "."}

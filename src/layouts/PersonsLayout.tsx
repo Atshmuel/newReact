@@ -1,6 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import Create from "../components/buttons/Create";
-import Display from "../components/buttons/display";
+import Display from "../components/buttons/Display";
 
 const PersonsLayout = () => {
   return (
@@ -18,7 +18,6 @@ const PersonsLayout = () => {
           </Link>
         </div>
       </div>
-
       <Outlet />
     </div>
   );

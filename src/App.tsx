@@ -13,14 +13,23 @@ import PersonLayout from "./layouts/PersonsLayout";
 import Error from "./components/Error";
 //layouts
 import RootLayout from "./layouts/RootLayout";
+//persons
 import PersonDetails, {
   personDetailLoader,
 } from "./pages/persons/PersonDetails";
 import SearchLayout from "./layouts/SearchLayout";
 import {
-  createAction,
+  createPersonAction,
   CreatePersonForm,
 } from "../src/pages/persons/CreatePersonForm";
+//groups
+import {
+  CreateGroupForm,
+  createGroupAction,
+} from "./pages/groups/CreateGroupForm";
+import { GroupsList, groupsLoader } from "./pages/groups/GroupsList";
+import { GroupDetails, groupsInfoLoader } from "./pages/groups/GroupDetails";
+
 import SuccessModal from "./components/Success";
 import GroupsLayout from "./layouts/GroupsLayout";
 const router = createBrowserRouter(
@@ -37,7 +46,7 @@ const router = createBrowserRouter(
         <Route
           path={"create"}
           element={<CreatePersonForm />}
-          action={createAction}
+          action={createPersonAction}
         />
 
         <Route
@@ -53,24 +62,30 @@ const router = createBrowserRouter(
         </Route>
       </Route>
       {/* Groups layout */}
-      <Route path={"/Groups"} element={<GroupsLayout />}>
+      <Route
+        path={"/Groups"}
+        element={<GroupsLayout />}
+        errorElement={<Error url={"/groups"} />}
+      >
         <Route
           path={"create"}
-          // element={<CreatePersonForm />} Should modify to create person and group in one form
-          action={createAction}
+          element={<CreateGroupForm />}
+          action={createGroupAction}
         />
 
         <Route
-          path={"PersonInfo"}
-          // element={<GroupInfo />} should create the page
-          loader={personsLoader}
-        />
-        <Route
-          path={":id"}
-          // element={<GroupDetails />} should create the page
-          loader={personDetailLoader}
-        />
+          path={"groupslist"}
+          element={<GroupsList />}
+          loader={groupsLoader}
+        >
+          <Route
+            path={":id"}
+            element={<GroupDetails />}
+            loader={groupsInfoLoader}
+          />
+        </Route>
       </Route>
+
       <Route path={"/success"} element={<SuccessModal />} />
       <Route path={"*"} element={<NotFound />} />
     </Route>

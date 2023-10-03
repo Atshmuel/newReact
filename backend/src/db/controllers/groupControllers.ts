@@ -68,7 +68,6 @@ export const groupAlreadyAChild = async (
 
 export const deleteGroup = async (group: ID, res: Response) => {
   console.log("deleteGroup");
-
   let groupId = group.id;
   const findGroup = await GroupModel.findById(groupId); //converting group from obj to str
   const personsInGroup = findGroup?.persons;
@@ -305,4 +304,13 @@ const selfFatherRec = async (
     return selfFatherRec(currGroupFather._id.toString(), groupName);
   }
   return false;
+};
+
+export const displayAllGroups = async (res: Response) => {
+  try {
+    const groups = await GroupModel.find();
+    res.status(200).json(groups);
+  } catch (error) {
+    throw new Error(error);
+  }
 };

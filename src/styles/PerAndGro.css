@@ -37,7 +37,8 @@
   animation: roll 3s linear infinite;
 }
 
-.person--details {
+.person--details,
+.group--details {
   z-index: 2;
   background-color: #fff;
   position: relative;
@@ -47,14 +48,16 @@
   padding: 2rem;
   border-radius: 8px;
 }
-.person--details p {
+.person--details p,
+.group--details p {
   display: flex;
   justify-content: center;
   align-self: center;
   align-items: center;
 }
 
-.person--modal {
+.person--modal,
+.group--modal {
   z-index: 1;
   background-color: rgb(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
@@ -67,7 +70,8 @@
   align-items: center;
 }
 
-.person--details .icon {
+.person--details .icon,
+.group--details .icon {
   position: absolute;
   top: 5%;
   right: 1%;
@@ -125,4 +129,8 @@
 
 .persons--list {
   margin-top: 3rem;
+}
+.arrow--left {
+  position: relative;
+  right: 2rem;
 }

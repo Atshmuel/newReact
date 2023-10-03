@@ -24,6 +24,7 @@ export const CreatePersonForm = () => {
                 name="name"
                 placeholder="Person name..."
                 required
+                autoFocus
               />
             </label>
             <label>
@@ -52,7 +53,11 @@ export const CreatePersonForm = () => {
   );
 };
 
-export const createAction = async ({ request }: { request: createFrom }) => {
+export const createPersonAction = async ({
+  request,
+}: {
+  request: createFrom;
+}) => {
   const data = await request.formData();
   const subbmition = {
     name: data.get("name"),

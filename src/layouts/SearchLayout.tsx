@@ -1,24 +1,25 @@
 import "../styles/Search.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Person } from "../interfaces/person";
 import { Group } from "../interfaces/group";
 import Loader from "../components/Loader";
 import Search from "../components/buttons/Search";
 
 const SearchLayout = () => {
-  const searchInput = document.getElementById("input");
+  // const searchInput = document.getElementById("input");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [data, setData] = useState<(Person & Group) | null>();
   const [isPending, setIsPending] = useState<boolean | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [url, setUrl] = useState<string>("");
-  const [searchType, setSearchType] = useState<string>("id");
+  const [url, setUrl] = useState("");
+  const [searchType, setSearchType] = useState("id");
 
   const handleSelect = (e: { target: { value: string } }) => {
     setData(null);
     setError(null);
     setIsPending(false);
-    const val: string = e.target.value;
+    const val = e.target.value;
     val === "PerId"
       ? (setUrl("/person/search?id="), setSearchType("id"))
       : val === "PerName"
@@ -30,11 +31,14 @@ const SearchLayout = () => {
       : (setUrl("/person/search/ingroup?name="), setSearchType("name"));
   };
   const handleBlur = () => {
-    searchInput!.value = "";
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+    // searchInput!.value = "";
   };
-  const handleChange = (e: { target: { value: string } }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value.length <= 0) return;
-    const searchValue: string = e.target.value.toLocaleLowerCase();
+    const searchValue = e.target.value.toLocaleLowerCase();
     if (searchType === "id" && searchValue.length !== 24) {
       return;
     }
@@ -68,6 +72,7 @@ const SearchLayout = () => {
       <div className="search--page">
         <form onChange={handleChange}>
           <input
+            ref={inputRef}
             id="input"
             type="text"
             placeholder="Type you query here..."

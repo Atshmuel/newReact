@@ -5,18 +5,20 @@ import Ok from "./buttons/Ok";
 
 const UpdateModal: React.FC<UpdateProps> = ({
   toggleModal,
-  name,
-  id,
-  age,
-  groups,
+  type,
   toggleUpdated,
 }) => {
-  const data = { name, age, groups }; //Used to make sure that the info has been changed, if hasn't dose not fetching the data to the server
-  const [formData, setFromData] = useState({
-    name: `${name}`,
-    age: age,
-    groups: groups,
-  });
+  let change: object; //Used to make sure that the info has been changed, if hasn't dose not fetching the data to the server
+  const isGroup = "groupName" in type;
+  isGroup
+    ? (change = {
+        groupName: type.groupName,
+        persons: type.persons,
+        groups: type.groups,
+      })
+    : (change = { name: type.name, age: type.age, groups: type.groups });
+
+  const [formData, setFromData] = useState(change);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const handleInput = (e: {
     target: { name: string; value: string | number | string[] };
@@ -24,15 +26,22 @@ const UpdateModal: React.FC<UpdateProps> = ({
     const { name, value } = e.target;
     setErrorMessage(null);
 
-    if (name !== "groups") {
-      setFromData({ ...formData, [name]: value });
-    } else setFromData({ ...formData, [name]: value.split(",") });
+    name === "groupName"
+      ? setFromData({ ...formData, [name]: value })
+      : name === "name"
+      ? setFromData({ ...formData, [name]: value })
+      : name === "age"
+      ? setFromData({ ...formData, [name]: Number(value) })
+      : setFromData({ ...formData, [name]: value.split(",") });
   };
+
   const handleSubmit = async (e: FormDataEvent) => {
     e.preventDefault();
 
     const res = await fetch(
-      `${import.meta.env.VITE_SERVER_URL}/person/update?id=${id}`,
+      `${import.meta.env.VITE_SERVER_URL}/${
+        isGroup ? "group" : "person"
+      }/update?id=${type._id}`,
       {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -40,12 +49,7 @@ const UpdateModal: React.FC<UpdateProps> = ({
       }
     );
 
-    if (
-      !res.ok ||
-      (data.age === formData.age &&
-        data.name === formData.name &&
-        data.groups === formData.groups)
-    ) {
+    if (!res.ok || change === formData) {
       const { message } = await res.json();
       setErrorMessage(`${message}`);
       return;
@@ -64,28 +68,57 @@ const UpdateModal: React.FC<UpdateProps> = ({
           >
             <Exit />
           </p>
-          <h2 className="modal--title">Update {`${name}'s`} info</h2>
+          <h2 className="modal--title">
+            Update {isGroup ? `${type.groupName}'s` : `${type.name}'s`} info
+          </h2>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="inputs--form">
             <label>
-              <span>New Name:</span>
-              <input
-                type="text"
-                name="name"
-                className="name"
-                placeholder="Person name..."
-                onChange={handleInput}
-              />
+              <span>New {`${isGroup ? "group" : "person"}`} name:</span>
+              {isGroup ? (
+                <>
+                  <input
+                    type="text"
+                    name="groupName"
+                    className="name"
+                    placeholder="New name..."
+                    onChange={handleInput}
+                    autoFocus
+                  />
+                </>
+              ) : (
+                <>
+                  <input
+                    type="text"
+                    name="name"
+                    className="name"
+                    placeholder="New name..."
+                    onChange={handleInput}
+                    autoFocus
+                  />
+                </>
+              )}
             </label>
             <label>
-              <span>New Age:</span>
-              <input
-                type="number"
-                name="age"
-                placeholder="Person age..."
-                onChange={handleInput}
-              />
+              <span>New {`${isGroup ? "perons array" : "person age"}`}:</span>
+              {isGroup ? (
+                <>
+                  <input
+                    type="text"
+                    name="persons"
+                    placeholder={`Should be Person1,Person2,...`}
+                    onChange={handleInput}
+                  />
+                </>
+              ) : (
+                <input
+                  type="number"
+                  name="age"
+                  placeholder="Person age..."
+                  onChange={handleInput}
+                />
+              )}
             </label>
             <label>
               <span>New Groups:</span>

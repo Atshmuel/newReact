@@ -14,7 +14,7 @@ const GroupsLayout = () => {
           </Link>
         </div>
         <div className="show">
-          <Link to={"GroupsInfo"}>
+          <Link to={"groupslist"}>
             <Display />
           </Link>
         </div>

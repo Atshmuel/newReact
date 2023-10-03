@@ -1,4 +1,5 @@
-import { PerGroup, PerName } from "./person";
+import { Group, Person } from "../types/Types";
+import { PerName } from "./person";
 
 export interface modalProp {
   toggleModal: () => void;
@@ -8,8 +9,7 @@ export interface modalProp {
 export interface UpdateProps {
   toggleModal: () => void;
   toggleUpdated: () => void;
-  id: string;
-  name: PerName | string;
-  age: PerName | number;
-  groups: PerGroup | string[];
+  // info: { type: Group; i: "Group" } | { type: Person; i: "Person" };
+  type: Group | Person;
+  // type: "Group" | "Person";
 }

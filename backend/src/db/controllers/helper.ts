@@ -45,14 +45,13 @@ export const existInGroups = async (
   return false; //already in the group
 };
 
-export const removeGroupFromPerson = async (id: ID, group: string) => {
-  let idNum: string | object = id;
+export const removeGroupFromPerson = async (
+  personId: string,
+  group: string
+) => {
   console.log("removeGroupFromPerson");
-  if (typeof id === "object") {
-    idNum = id.id;
-  }
   await PersonModel.findOneAndUpdate(
-    { _id: idNum },
+    { _id: personId },
     { $pull: { groups: group } } //removing the group from the person groups array
   );
 };

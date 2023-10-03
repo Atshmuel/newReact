@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLoaderData, Link, Outlet } from "react-router-dom";
 import { z } from "zod";
-import { Person } from "../../types/PersonTypes";
+import { Person } from "../../types/Types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../styles/List.css";
 import DeleteModal from "../../components/DeleteModal";
@@ -15,7 +15,6 @@ import {
 import Update from "../../components/buttons/Update";
 
 export const PersonInfo = () => {
-  //Bug with rendering the UI after updating
   //Should add schima's and interfaces and types
   const persons = useLoaderData() as Person[];
   const [allPersons, setPersons] = useState<Person[]>(persons);
@@ -89,10 +88,11 @@ export const PersonInfo = () => {
       const res = await fetch(
         `${import.meta.env.VITE_SERVER_URL}/person/showall`
       );
-      setPersons(await res.json());
+      if (res.ok) {
+        setPersons(await res.json());
+      }
     });
   }, [updated]);
-
   if (!allPersons) {
     return <div>Loading...</div>;
   }
@@ -170,7 +170,7 @@ export const PersonInfo = () => {
               </div>
 
               <h2 className="person--name">
-                {i + 1 + `. `}Here are some info about{": "}
+                {i + 1 + `. `}Here are some info about the person{": "}
                 <span className="name">
                   {per.name
                     .charAt(0)
@@ -204,10 +204,7 @@ export const PersonInfo = () => {
                 <UpdateModal
                   toggleModal={() => closeModal(i)}
                   toggleUpdated={() => updatePerson(i)}
-                  name={personInfo.name}
-                  age={personInfo.age}
-                  groups={personInfo.groups}
-                  id={personInfo.id}
+                  type={allPersons[i]}
                 ></UpdateModal>
               ) : null}
             </div>
